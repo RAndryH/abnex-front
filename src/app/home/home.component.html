@@ -1,0 +1,72 @@
+<div class="d-flex flex-column flex-md-row align-items-center mb-4 border-bottom">
+    <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto float-md-end">
+        <div class="container-fluid" *ngIf="!checkSessionExists">
+            <a class="navbar-brand" href="#" (click)="openModal(mymodal)" ngbTooltip="Login" placement="bottom"><i class="fas fa-sign-in-alt"></i></a>
+        </div>
+        <div class="container-fluid" *ngIf="checkSessionExists">
+            <a class="navbar-brand" href="#" (click)="logout()" ngbTooltip="Logout" placement="bottom"><i class="fas fa-sign-out-alt"></i></a>
+        </div>
+    </nav>    
+</div>
+
+<div class="container">
+    <h1 class="text-center pb-5 text-uppercase">Liste des voitures</h1>
+    <div class="row">
+        <div class="col-4 pb-5" *ngFor="let item of allCars">
+            <div class="card shadow-sm rounded" style="width: 20rem;">
+                <img src="{{item.img}}" class="card-img-top" alt="{{item.marque}}">
+                <div class="card-body">
+                  <h5 class="display-6">{{item.marque}}</h5>
+                  <h5 class="card-title"><ins>Année:</ins> {{item.annee}}</h5>
+                  <hr class="dropdown-divider">
+                  <p *ngIf="checkSessionExists">
+                    <span *ngFor="let cmt of item.comment" class="lead"><small>{{cmt.text}}</small> <br></span>
+                  </p>
+
+                  <div *ngIf="checkSessionExists">
+                    <div class="mb-3">
+                        <textarea class="form-control" id="exampleFormControlTextarea1" rows="3" placeholder="Votre commentaire..." [(ngModel)]="item.currentcomment"></textarea>
+                    </div>
+                    <button type="submit" class="btn btn-primary" (click)="commenter(item.id, item.currentcomment)" [disabled]="!item?.currentcomment">Commenter</button>
+                  </div>
+                    
+                  <button type="button" class="btn btn-primary" (click)="openModal(mymodal)" *ngIf="!checkSessionExists"><i class="fas fa-comment"></i>&nbsp;&nbsp;&nbsp;Votre commentaire</button>
+                </div>
+                <div class="card-footer text-muted">
+                    <div class="row">
+                        <div class="col-6"></div>
+                        <div class="col-6 text-end"><span class="badge rounded-pill bg-danger">{{item.comment.length}}</span></div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+<div class="mt-auto align-items-center mb-4 border-bottom">
+    
+</div>
+
+<ng-template #mymodal let-modal>
+    <div class="modal-header">
+        <h4 class="modal-title" id="modal-basic-title">Login user</h4>
+        <a href="#" aria-label="Close" (click)="modal.dismiss('Cross click')" class="text-danger">
+            <i class="fas fa-times-circle" style="font-size: 25px;"></i>
+        </a>
+    </div>
+    <div class="modal-body">
+        <div class="mb-3">
+            <label for="username" class="form-label">User name</label>
+            <input type="text" class="form-control" id="username" placeholder="User name" name="username" [(ngModel)]="username">
+        </div>
+
+        <div class="mb-3">
+            <label for="email" class="form-label">Email address</label>
+            <input type="email" class="form-control" id="email" placeholder="name@example.com" name="email" [(ngModel)]="email">
+        </div>
+
+        <div class="mb-3">
+            <button type="button" class="btn btn-danger" (click)="login()" [disabled]="!username || !email"><i class="fas fa-sign-in-alt"></i> Login</button>
+        </div>
+    </div>
+</ng-template>
