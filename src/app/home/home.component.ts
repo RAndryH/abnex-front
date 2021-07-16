@@ -21,6 +21,8 @@ export class HomeComponent implements OnInit {
   checkSessionExists: any;
   checkLogin: boolean = false;
 
+  public errorMSg: string = "";
+
   constructor(public carsService: CarsService, private modalService: NgbModal, private loginService: LoginService, private storageService: StorageService) { 
 
     /** Get all cars */
@@ -60,14 +62,24 @@ export class HomeComponent implements OnInit {
   /** Function to log user */
   login() {
     this.checkLogin = false;
-    this.loginService.login({"username": this.username, "email": this.email}).subscribe((data: any) => {
-      if (data.length) {
-        this.reload();
-        this.storageService.createSession(data);
-        this.checkLogin = true;
-      }
-      return
-    })
+    this.errorMSg = "";
+    if (this.username && this.email) {
+      this.loginService.login({"username": this.username, "email": this.email}).subscribe((data: any) => {
+        if (data.length) {
+          this.reload();
+          this.storageService.createSession(data);
+          this.checkLogin = true;
+          this.errorMSg = "";
+        } else {
+          this.errorMSg += "User name/Email sont incorrecte."
+        }
+        return
+      })
+
+    } else {
+      this.errorMSg += "User name/Email sont incorrecte."
+    }
+    
   }
 
   /** Function to logout user */

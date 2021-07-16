@@ -71,5 +71,11 @@
         <div class="mb-3">
             <button type="button" class="btn btn-danger" (click)="login()" [disabled]="!username || !email"><i class="fas fa-sign-in-alt"></i> Login</button>
         </div>
+
+        <div class="mb-3" *ngIf="errorMSg">
+            <div class="alert alert-danger" role="alert">
+                <b>{{errorMSg}}</b>
+            </div>
+        </div>
     </div>
 </ng-template>
