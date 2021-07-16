@@ -69,7 +69,7 @@
         </div>
 
         <div class="mb-3">
-            <button type="button" class="btn btn-danger" (click)="login()" [disabled]="!username || !email"><i class="fas fa-sign-in-alt"></i> Login</button>
+            <button type="button" class="btn btn-danger" (click)="login()" [disabled]="!username || !email"><i [ngClass]="spinner ? 'fas fa-spinner' : 'fas fa-sign-in-alt'"></i> Login</button>
         </div>
 
         <div class="mb-3" *ngIf="errorMSg">

@@ -19,7 +19,7 @@ export class HomeComponent implements OnInit {
   email: string = "";
 
   checkSessionExists: any;
-  checkLogin: boolean = false;
+  spinner: boolean = false;
 
   public errorMSg: string = "";
 
@@ -61,23 +61,25 @@ export class HomeComponent implements OnInit {
 
   /** Function to log user */
   login() {
-    this.checkLogin = false;
+    this.spinner = true;
     this.errorMSg = "";
     if (this.username && this.email) {
       this.loginService.login({"username": this.username, "email": this.email}).subscribe((data: any) => {
         if (data.length) {
           this.reload();
           this.storageService.createSession(data);
-          this.checkLogin = true;
+          this.spinner = false;
           this.errorMSg = "";
         } else {
-          this.errorMSg += "User name/Email sont incorrecte."
+          this.errorMSg += "User name/Email sont incorrecte.";
+          this.spinner = false;
         }
         return
       })
 
     } else {
-      this.errorMSg += "User name/Email sont incorrecte."
+      this.errorMSg += "User name/Email sont incorrecte.";
+      this.spinner = false;
     }
     
   }
@@ -97,10 +99,12 @@ export class HomeComponent implements OnInit {
 
   /** Function to add new comment on the car */
   commenter(id: any, msg: string) {
+    this.spinner = true;
     if (id && msg) {
       this.carsService.addCommentOneCar(id, msg).subscribe((res: any) => {
         this.allCars[id - 1].comment.push({"text": msg})
         this.allCars[id - 1].currentcomment = "";
+        this.spinner = false;
       })
     }
     
