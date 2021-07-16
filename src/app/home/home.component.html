@@ -1,5 +1,6 @@
 <div class="d-flex flex-column flex-md-row align-items-center mb-4 border-bottom">
     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto float-md-end">
+        
         <div class="container-fluid" *ngIf="!checkSessionExists">
             <a class="navbar-brand" href="#" (click)="openModal(mymodal)" ngbTooltip="Login" placement="bottom"><i class="fas fa-sign-in-alt"></i></a>
         </div>
@@ -35,7 +36,11 @@
                 <div class="card-footer text-muted">
                     <div class="row">
                         <div class="col-6"></div>
-                        <div class="col-6 text-end"><span class="badge rounded-pill bg-danger">{{item.comment.length}}</span></div>
+                        <div class="col-6 text-end">
+                            <i class="fas fa-comment-dots position-relative">
+                                <span class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger">{{item.comment.length}}</span>
+                            </i>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -43,13 +48,11 @@
     </div>
 </div>
 
-<div class="mt-auto align-items-center mb-4 border-bottom">
-    
-</div>
+<div class="mt-auto align-items-center mb-4 border-bottom"></div>
 
 <ng-template #mymodal let-modal>
     <div class="modal-header">
-        <h4 class="modal-title" id="modal-basic-title">Login user</h4>
+        <h4 class="modal-title" id="modal-basic-title">Login</h4>
         <a href="#" aria-label="Close" (click)="modal.dismiss('Cross click')" class="text-danger">
             <i class="fas fa-times-circle" style="font-size: 25px;"></i>
         </a>
