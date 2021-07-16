@@ -16,6 +16,15 @@ export class StorageService {
     return
   }
 
+  /** Function to get current session */
+  getSession() {
+    const currentSession = this. sessionExists();
+    if (currentSession) {
+      return sessionStorage.getItem("abnex");
+    }
+    return JSON.stringify([]);
+  }
+
   /** Function to check session if exists */
   sessionExists(): boolean {
     const abnexsession = sessionStorage.getItem("abnex");

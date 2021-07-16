@@ -23,6 +23,9 @@ export class HomeComponent implements OnInit {
 
   public errorMSg: string = "";
 
+  sessUsername: string = "";
+  sessEmail: string = "";
+
   constructor(public carsService: CarsService, private modalService: NgbModal, private loginService: LoginService, private storageService: StorageService) { 
 
     /** Get all cars */
@@ -34,6 +37,14 @@ export class HomeComponent implements OnInit {
 
     /** Check the session exists */
     this.checkSessionExists = this.checkIfSessionExists();
+
+    /** Get current Session */
+    const currentSession: any = this.storageService.getSession();
+    const sessionParsed = JSON.parse(currentSession);
+    if (sessionParsed.length) {
+      this.sessUsername = sessionParsed[0].username;
+      this.sessEmail = sessionParsed[0].email;
+    }
   }
 
   ngOnInit(): void {

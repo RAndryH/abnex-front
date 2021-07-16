@@ -1,4 +1,5 @@
 <div class="d-flex flex-column flex-md-row align-items-center mb-4 border-bottom">
+    <div class="container" *ngIf="sessUsername.length"><i class="fas fa-user"></i> {{sessUsername}} &nbsp;&nbsp; <i class="fas fa-at"></i> {{sessEmail}}</div>
     <nav class="d-inline-flex mt-2 mt-md-0 ms-md-auto float-md-end">
         
         <div class="container-fluid" *ngIf="!checkSessionExists">
